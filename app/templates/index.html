@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northstar AI | Lead Capture & Automation</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+<body class="public-body">
+  <!-- Public Top Navigation -->
+  <header class="public-navbar">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="brand-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </div>
+      <div class="brand-info">
+        <div class="brand-name" style="color: #0f172a;">Northstar <span style="color: var(--primary);">AI</span></div>
+        <div class="brand-sub">Lead Automation Platform</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="/dashboard" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Open CRM Dashboard</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero & Submission Container -->
+  <main class="public-hero">
+    <div class="hero-left">
+      <div class="ai-engine-tag" style="width: fit-content; margin-bottom: 8px;">
+        <span class="pulse-dot"></span>
+        <span>AI-Powered Intake Engine</span>
+      </div>
+      <h1>Every great partnership starts with a smart conversation.</h1>
+      <p>
+        Submit your enquiry or import lead lists. Our intelligent pipeline normalizes contact data, prevents duplicates in real time, scores engagement intent, and notifies sales reps instantly.
+      </p>
+
+      <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: #eef2ff; color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">1</div>
+          <div>
+            <div style="font-weight: 600; color: #0f172a; font-size: 14px;">Instant Intake & Validation</div>
+            <div style="color: var(--text-muted); font-size: 13px;">Case-insensitive duplicate suppression and email normalization.</div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: #fff1f2; color: #e11d48; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</div>
+          <div>
+            <div style="font-weight: 600; color: #0f172a; font-size: 14px;">AI Temperature Scoring</div>
+            <div style="color: var(--text-muted); font-size: 13px;">Classifies leads automatically into Hot, Warm, or Cold based on intent signals.</div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">3</div>
+          <div>
+            <div style="font-weight: 600; color: #0f172a; font-size: 14px;">Automated Delivery & Audit Trail</div>
+            <div style="color: var(--text-muted); font-size: 13px;">Dispatches SMTP confirmation and keeps complete audit logs.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forms Column -->
+    <div class="feature-cards-col">
+      <!-- Direct Contact Form Card -->
+      <div class="panel" style="padding: 28px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div>
+            <h2 style="font-family: var(--font-sans); font-size: 18px; font-weight: 700; color: #0f172a;">Talk to Our Team</h2>
+            <p style="font-size: 13px; color: var(--text-muted);">Fill out your information to connect with sales.</p>
+          </div>
+          <span class="badge-status new">● SLA &lt; 24h</span>
+        </div>
+
+        <form id="lead-form" style="display: flex; flex-direction: column; gap: 14px;">
+          <div id="form-message" class="alert" style="display: none;"></div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-name">Full Name *</label>
+            <input class="form-input" id="input-name" name="name" required placeholder="Jane Doe" maxlength="120">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-email">Work Email *</label>
+            <input class="form-input" id="input-email" name="email" type="email" required placeholder="jane@company.com" maxlength="254">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-company">Company *</label>
+            <input class="form-input" id="input-company" name="company" required placeholder="Acme Technologies" maxlength="160">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-message">What can we help you with? *</label>
+            <textarea class="form-textarea" id="input-message" name="message" rows="3" required placeholder="Tell us about your team size, budget, or timelines…" maxlength="5000"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="padding: 12px; font-size: 14px; margin-top: 6px;">
+            <span>Submit Enquiry</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+          <p style="font-size: 11.5px; color: var(--text-muted); text-align: center;">Your data is processed securely through our SQLite CRM pipeline.</p>
+        </form>
+      </div>
+
+      <!-- Bulk CSV Import Card -->
+      <div class="panel" style="padding: 24px;">
+        <div style="margin-bottom: 14px;">
+          <h3 style="font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: #0f172a;">Bulk Lead Import</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted);">Have a list of leads? Upload a CSV file directly (columns: <code>name, email, company, message</code>).</p>
+        </div>
+
+        <form id="csv-form" style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="dropzone" id="csv-dropzone" style="padding: 20px;">
+            <div class="dropzone-icon" style="width: 36px; height: 36px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            </div>
+            <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);" id="dropzone-label">
+              Click to choose CSV file
+            </div>
+            <input type="file" id="csv-file-input" name="file" accept=".csv,text/csv" required>
+          </div>
+
+          <button type="submit" class="btn btn-secondary" style="padding: 10px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span>Upload & Process CSV</span>
+          </button>
+
+          <div id="csv-message" class="alert" style="display: none;"></div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer style="border-top: 1px solid var(--border-subtle); background: #ffffff; padding: 24px; text-align: center; font-size: 12px; color: var(--text-muted);">
+    Northstar AI CRM · Powered by FastAPI, SQLite, and Automated Event Pipelines
+  </footer>
+
+  <div id="toast-container"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

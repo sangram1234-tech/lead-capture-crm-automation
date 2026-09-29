@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northstar AI | Lead CRM Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Left Sidebar Navigation -->
+    <aside class="app-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <div class="brand-name">Northstar <span>AI</span></div>
+          <div class="brand-sub">Lead Intelligence CRM</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Navigation</div>
+        <a class="nav-item active" href="/dashboard" id="nav-dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" href="#leads-section" id="nav-leads">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>All Leads</span>
+          <span class="nav-counter" id="nav-lead-count">0</span>
+        </a>
+        <a class="nav-item" href="#activity-section" id="nav-logs">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          <span>Audit Logs</span>
+        </a>
+
+        <div class="nav-label">Actions</div>
+        <a class="nav-item" href="javascript:void(0)" id="sidebar-add-lead-btn">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>Add Lead</span>
+        </a>
+        <a class="nav-item" href="javascript:void(0)" id="sidebar-import-btn">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <span>Import CSV</span>
+        </a>
+        <a class="nav-item" href="/" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          <span>Public Portal</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="engine-status-card">
+          <div class="engine-header">
+            <span class="engine-title">
+              <span class="pulse-dot"></span>
+              AI Scoring Engine
+            </span>
+          </div>
+          <div class="engine-status-text">Real-time NLP Active</div>
+          <div class="engine-sub">FastAPI • SQLite • SMTP</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <!-- Top Navigation Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="mobile-menu-btn" id="mobile-toggle" aria-label="Toggle Navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="breadcrumbs">
+            <span>CRM</span>
+            <span>/</span>
+            <span class="current">Lead Intelligence Pipeline</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="ai-engine-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>AI Lead Intelligence</span>
+          </div>
+
+          <div class="header-actions">
+            <button class="btn-icon" id="btn-refresh" title="Refresh Pipeline Data">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            </button>
+            <button class="btn btn-secondary" id="btn-open-import">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span>Import CSV</span>
+            </button>
+            <button class="btn btn-primary" id="btn-open-add-lead">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add Lead</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-container">
+        <!-- Page Title & Header -->
+        <div class="page-header-row">
+          <div class="page-title-group">
+            <h1>Lead Pipeline Overview</h1>
+            <p>Real-time intake tracking, qualification scoring, and multi-channel audit trail.</p>
+          </div>
+        </div>
+
+        <!-- 4 Summary Metric Cards (Total, New, Hot, Converted) -->
+        <section class="summary-grid" id="summary-cards">
+          <!-- Total Leads -->
+          <article class="stat-card total" id="card-total-leads">
+            <div class="stat-top">
+              <span class="stat-label">Total Leads</span>
+              <div class="stat-icon-wrap">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="val-total-leads">0</div>
+            <div class="stat-footer">
+              <span class="stat-pill success">● All Sources</span>
+              <span id="sub-total-source">Website & CSV</span>
+            </div>
+          </article>
+
+          <!-- New Leads -->
+          <article class="stat-card new" id="card-new-leads">
+            <div class="stat-top">
+              <span class="stat-label">New Leads</span>
+              <div class="stat-icon-wrap">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="val-new-leads">0</div>
+            <div class="stat-footer">
+              <span class="stat-pill neutral">● Pending Review</span>
+              <span>Awaiting contact</span>
+            </div>
+          </article>
+
+          <!-- Hot Leads (AI Temperature) -->
+          <article class="stat-card hot" id="card-hot-leads">
+            <div class="stat-top">
+              <span class="stat-label">Hot Leads</span>
+              <div class="stat-icon-wrap">
+                <svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="val-hot-leads">0</div>
+            <div class="stat-footer">
+              <span class="stat-pill hot">🔥 AI High Priority</span>
+              <span id="sub-hot-leads">Immediate outreach</span>
+            </div>
+          </article>
+
+          <!-- Converted Leads -->
+          <article class="stat-card converted" id="card-converted-leads">
+            <div class="stat-top">
+              <span class="stat-label">Converted Leads</span>
+              <div class="stat-icon-wrap">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+            </div>
+            <div class="stat-value" id="val-converted-leads">0</div>
+            <div class="stat-footer">
+              <span class="stat-pill success">✓ Won Deals</span>
+              <span id="val-conversion-rate">0% conversion</span>
+            </div>
+          </article>
+        </section>
+
+        <!-- Secondary Metrics Bar -->
+        <section class="secondary-metrics-row">
+          <div class="mini-stat">
+            <div class="mini-stat-info">
+              <span class="mini-stat-title">Contacted</span>
+              <span class="mini-stat-val" id="val-contacted-leads">0</span>
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-info">
+              <span class="mini-stat-title">Qualified</span>
+              <span class="mini-stat-val" id="val-qualified-leads">0</span>
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-info">
+              <span class="mini-stat-title">Lost</span>
+              <span class="mini-stat-val" id="val-lost-leads">0</span>
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-info">
+              <span class="mini-stat-title">Website Leads</span>
+              <span class="mini-stat-val" id="val-website-leads">0</span>
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-info">
+              <span class="mini-stat-title">CSV Imported</span>
+              <span class="mini-stat-val" id="val-csv-leads">0</span>
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-info">
+              <span class="mini-stat-title">Duplicates Blocked</span>
+              <span class="mini-stat-val" id="val-duplicates-count">0</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Leads Pipeline Table Section -->
+        <section class="panel" id="leads-section">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <h2>All Pipeline Leads</h2>
+              <p>Search, filter by status, source, or AI engagement temperature.</p>
+            </div>
+          </div>
+
+          <!-- Advanced Filters Toolbar -->
+          <div class="toolbar-wrap">
+            <div class="search-input-wrap">
+              <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="search" class="search-input" placeholder="Search by name, email, or company… (Press '/' to focus)">
+            </div>
+
+            <div class="filter-group">
+              <!-- Status Filter -->
+              <select id="status-filter" class="select-filter">
+                <option value="">Status: All</option>
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Follow-up">Follow-up</option>
+                <option value="Qualified">Qualified</option>
+                <option value="Converted">Converted</option>
+                <option value="Lost">Lost</option>
+              </select>
+
+              <!-- Temperature Filter -->
+              <select id="temp-filter" class="select-filter">
+                <option value="">AI Temp: All</option>
+                <option value="Hot">🔥 Hot</option>
+                <option value="Warm">⚡ Warm</option>
+                <option value="Cold">❄️ Cold</option>
+              </select>
+
+              <!-- Source Filter -->
+              <select id="source-filter" class="select-filter">
+                <option value="">Source: All</option>
+                <option value="Website">Website</option>
+                <option value="CSV">CSV</option>
+              </select>
+
+              <button class="btn-reset-filters" id="btn-reset-filters">Reset</button>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="table-responsive">
+            <table class="crm-table">
+              <thead>
+                <tr>
+                  <th>Lead</th>
+                  <th>Contact Email</th>
+                  <th>Source</th>
+                  <th>Status</th>
+                  <th>AI Temperature</th>
+                  <th>Created</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="leads-body">
+                <!-- Skeletons rendered initially -->
+                <tr>
+                  <td colspan="7" style="padding: 24px;">
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                      <div class="skeleton" style="height: 24px; width: 100%;"></div>
+                      <div class="skeleton" style="height: 24px; width: 90%;"></div>
+                      <div class="skeleton" style="height: 24px; width: 95%;"></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <h3>No leads found</h3>
+            <p>No records match your active search or filters. Try adjusting your filter settings or capture a new lead.</p>
+            <button class="btn btn-secondary" onclick="document.querySelector('#btn-reset-filters').click();">Reset Filters</button>
+          </div>
+        </section>
+
+        <!-- Activity Logs Section -->
+        <section class="panel" id="activity-section">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <h2>Recent System Activity & Audit Trail</h2>
+              <p>Email delivery notices, duplicate suppression, and intake timestamps.</p>
+            </div>
+          </div>
+
+          <div class="logs-grid" id="logs">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: ADD NEW LEAD
+       ========================================================================== -->
+  <div class="modal-backdrop" id="add-lead-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Lead</h3>
+        <button class="btn-icon" id="btn-close-add-modal" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="lead-form">
+        <div class="modal-body">
+          <div id="form-message" class="alert" style="display: none;"></div>
+
+          <div class="form-group">
+            <label class="form-label" for="lead-name">Full Name *</label>
+            <input class="form-input" id="lead-name" name="name" required placeholder="e.g. Sarah Connor" maxlength="120">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="lead-email">Work Email *</label>
+            <input class="form-input" id="lead-email" name="email" type="email" required placeholder="e.g. sarah@cyberdyne.io" maxlength="254">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="lead-company">Company Name *</label>
+            <input class="form-input" id="lead-company" name="company" required placeholder="e.g. Cyberdyne Systems" maxlength="160">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="lead-message">Enquiry / Project Details *</label>
+            <textarea class="form-textarea" id="lead-message" name="message" rows="3" required placeholder="Describe their goals, team size, budget, or timeline…" maxlength="5000"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-add-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-lead">
+            <span>Create & Process Lead</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: CSV BULK IMPORT
+       ========================================================================== -->
+  <div class="modal-backdrop" id="import-csv-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Bulk Import Leads from CSV</h3>
+        <button class="btn-icon" id="btn-close-import-modal" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="csv-form">
+        <div class="modal-body">
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+            Upload a standard UTF-8 CSV file. The file must include the headers: <code>name</code>, <code>email</code>, <code>company</code>, and <code>message</code>.
+          </p>
+
+          <div class="dropzone" id="csv-dropzone">
+            <div class="dropzone-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            </div>
+            <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;" id="dropzone-label">
+              Click to browse or drop CSV file here
+            </div>
+            <span style="font-size: 11.5px; color: var(--text-muted);">Supports .csv files up to 10MB</span>
+            <input type="file" id="csv-file-input" name="file" accept=".csv,text/csv" required>
+          </div>
+
+          <div id="csv-message" class="alert" style="display: none;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-import-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-csv">
+            <span>Start Import</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SLIDE-OVER DRAWER: LEAD DETAILS
+       ========================================================================== -->
+  <div class="drawer-backdrop" id="lead-drawer-backdrop">
+    <div class="drawer" id="lead-drawer">
+      <div class="drawer-header">
+        <h3 class="modal-title">Lead Profile & AI Insights</h3>
+        <button class="btn-icon" id="btn-close-drawer" aria-label="Close drawer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="drawer-body" id="drawer-content">
+        <!-- Dynamically rendered on lead selection -->
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn btn-outline-danger" id="btn-delete-lead">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          <span>Delete Lead</span>
+        </button>
+        <button class="btn btn-secondary" id="btn-done-drawer">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="/static/app.js"></script>
+</body>
+</html>
